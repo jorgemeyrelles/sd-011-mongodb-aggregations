@@ -1,6 +1,6 @@
 db.trips.aggregate([
   { $match: {
-    birthYear: { $exists: true, $ne: " " },
+    birthYear: { $exists: true, $ne: "" },
   },
   },
   { $group: {
