@@ -12,12 +12,12 @@ db.trips.aggregate(
     },
   },
   {
-    $sort: { duracaoMedia: -1 },
+    $sort: { duracaoMedia: 1 },
   },
   {
     $project: {
       _id: 0,
       tipo: "$_id",
-      duracaMedia: { $round: [{ $divide: ["$duracaMedia", 60 * 60 * 1000] }, 2] },
+      duracaoMedia: { $round: [{ $divide: ["$duracaMedia", 60 * 60 * 1000] }, 2] },
     } },
 );
