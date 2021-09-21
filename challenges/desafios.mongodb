@@ -14,24 +14,78 @@ use ('aggregations');
 // ]).itcount();
 
 // Desafio 2
+// db.movies.aggregate([
+//   {
+//     $match: {
+//       "imdb.rating": { $gte: 7 },
+//       genres: { $not: { $in: ["Crime", "Horror"] } },
+//       rated: { $in: ["PG", "G"] },
+//       languages: { $all: ["English", "Spanish"] },
+//     },
+//   },
+//   {
+//     $project: {
+//       titulo: "$title",
+//       avaliado: "$rated",
+//       notaIMDB: "$imdb.rating",
+//       votosIMDB: "$imdb.votes",
+//       ano: "$year",
+//       _id: 0
+//     }
+//   }
+// ]);
+
+// Desafio 3
+// db.movies.aggregate([
+//   {
+//     $match: {
+//       "imdb.rating": { $gte: 7 },
+//       genres: { $not: { $in: ["Crime", "Horror"] } },
+//       rated: { $in: ["PG", "G"] },
+//       languages: { $all: ["English", "Spanish"] },
+//     },
+//   },
+//   {
+//     $project: {
+//       titulo: "$title",
+//       avaliado: "$rated",
+//       notaIMDB: "$imdb.rating",
+//       votosIMDB: "$imdb.votes",
+//       ano: "$year",
+//       _id: 0
+//     }
+//   },
+//   {
+//     $sort: {
+//       ano: -1,
+//       notaIMDB: -1,
+//       titulo: 1
+//     }
+//   }
+// ]);
+
+
+// Desafio 4
 db.movies.aggregate([
   {
+    $addFields: {
+      title_split: { $split: ["$title", " "] }
+    }
+  },
+  {
     $match: {
-      "imdb.rating": { $gte: 7 },
-      genres: { $not: { $in: ["Crime", "Horror"] } },
-      rated: { $in: ["PG", "G"] },
-      languages: { $all: ["English", "Spanish"] },
-    },
+      $expr: {
+        $eq: [{ $size: "$title_split" }, 1]
+      } 
+    }
+  },
+  {
+    $sort: { title: 1 }
   },
   {
     $project: {
-      titulo: "$title",
-      avaliado: "$rated",
-      notaIMDB: "$imdb.rating",
-      votosIMDB: "$imdb.votes",
-      ano: "$year",
+      title_split: 1,
       _id: 0
     }
   }
 ]);
-
