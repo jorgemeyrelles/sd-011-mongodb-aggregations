@@ -16,8 +16,7 @@ db.movies.aggregate([
     ano: -1,
     notaIMDB: -1,
     titulo: 1,
-  },
-  },
+  } },
 ]);
 // Reference: https://www.ti-enxame.com/pt/mongodb/como-renomear-campos-ao-executar-pesquisa-projecao-no-mongodb/1047436986/
 // scripts/evaluate.sh desafioN
