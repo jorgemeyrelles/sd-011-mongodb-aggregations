@@ -2,67 +2,50 @@ use ('aggregations');
 db.movies.find()
 
 use ('aggregations');
-// db.movies.aggregate([
-//   {
-//     $match: {
-//       "imdb.rating": {
-//         $gte: 7
-//       },
-//       genres: {
-//         $not: {
-//           $in: ["Crime", "Horror"]
-//         }
-//       },
-//       $or: [{rated: "PG"}, {rated: "G"}],
-//       languages: {
-//         $all: ["English", "Spanish"]
-//       }
-//     }
-//   },
-//   {
-//     $project: {
-//       titulo: "$title",
-//       avaliado: "$rated",
-//       notaIMDB: "$imdb.rating",
-//       votosIMDB: "$imdb.votes",
-//       ano: "$year",
-//       _id: 0,
-//     }
-//   },
-//   {
-//     $sort: {
-//       ano: -1,
-//       notaIMDB: -1,
-//       titulo: 1
-//     }
-//   }
-// ]);
+const favorites = [
+  'Sandra Bullock',
+  'Tom Hanks',
+  'Julia Roberts',
+  'Kevin Spacey',
+  'George Clooney'];
 
-use ('aggregations');
 db.movies.aggregate([
   {
     $addFields: {
-      title_split: {
-        $split: ["$title", " "]
+      num_favs: {
+        $size: {
+          $setIntersection: ["$cast", favorites]
+        }
       }
     }
   },
   {
     $match: {
-      title_split: {
-        $size: 1
-      }
+    countries: {
+      $in: ['USA']
+    },
+    "tomatoes.viewer.rating": { $gte: 3 },
+    cast: {
+      $in: favorites
     }
+    },
   },
   {
     $sort: {
-      title: 1
+      num_favs: -1, "tomatoes.viewer.rating": -1, title: -1
     }
   },
   {
     $project: {
-      title_split: 1,
-      _id: 0
+      _id: 0,
+      title: 1,
     }
+  },
+  {
+    $skip: 24
+  },
+  {
+    $limit: 1
   }
 ]);
+
