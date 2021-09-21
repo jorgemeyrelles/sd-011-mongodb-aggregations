@@ -13,9 +13,6 @@ db.movies.aggregate([
     },
   },
   {
-    $unwind: "$title_split",
-  },
-  {
     $sort: {
       title_split: 1,
     },
