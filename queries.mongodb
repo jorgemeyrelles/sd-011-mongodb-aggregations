@@ -1,30 +1,48 @@
-use ('aggregations');
-db.trips.find();
 
-use("aggregations");
+use ('aggregations');
+// db.trips.aggregate([
+//   {
+//     $match: {
+//       startTime: { $gte: new Date("2016-03-10"), $lt: new Date("2016-03-11") },
+//     },
+//   },
+//   {
+//     $group: {
+//       _id: null,
+//       duracaoMediaEmMinutos: { $avg: { $subtract: ["$stopTime", "$startTime"] } },
+//     },
+//   },
+//   {
+//     $project: {
+//       _id: 0,
+//       duracaoMediaEmMinutos: { $round: { $divide: ["$duracaoMediaEmMinutos", 60000] } },
+//     },
+//   },
+//   {
+//     $limit: 1,
+//   },
+// ]);
+
+use ('aggregations');
 db.trips.aggregate([
-  // {
-  //   $match: {
-  //     startTime: { $gte: new Date('2016-03-10'), $lt: new Date('2016-03-11')}
-  //   }
-  // },
   {
     $group: {
       _id: "$bikeid",
-      duracaoMediaEmMinutos: { $avg: { $subtract: ['$stopTime','$startTime'] } },
-    }
+      duracaoMediaEmMinutos: { $avg: { $subtract: ["$stopTime", "$startTime"] } },
+    },
   },
   {
     $project: {
       _id: 0,
       bikeId: "$_id",
-      duracaoMedia: {$ceil: [{$divide: [{$divide: ["$duracaoMediaEmMinutos", 1000]}, 60]}]},
+      duracaoMedia: { $ceil: [{ $divide: ["$duracaoMediaEmMinutos", 60000] }],
     }
+    },
   },
   {
-    $sort: { duracaoMedia: -1 }
+    $sort: { duracaoMedia: -1 },
   },
   {
-    $limit: 5
-  }
+    $limit: 5,
+  },
 ]);
