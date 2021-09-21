@@ -1,4 +1,3 @@
-use("aggregations");
 // Desafio 4
 // Nossa coleção de filmes tem muitos documentos diferentes, alguns com títulos "mais complexos" do que outros. Se quisermos analisar nossa coleção para encontrar títulos de filmes que têm uma só palavra no título, poderíamos buscar todos os filmes da coleção e processar isso na aplicação, mas o Aggregation Framework nos permite fazer isso diretamente no lado do banco de dados.
 

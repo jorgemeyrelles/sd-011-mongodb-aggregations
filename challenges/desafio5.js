@@ -1,4 +1,3 @@
-use("aggregations");
 // Desafio 5
 // Temos outra noite de filme aqui na Trybe e, desta vez, nós perguntamos à equipe quais são suas pessoas preferidas como atores e/ou atrizes. Aqui está o resultado:
 

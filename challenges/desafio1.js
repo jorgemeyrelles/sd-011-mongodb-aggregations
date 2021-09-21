@@ -8,7 +8,6 @@
 // languages contém English e Spanish.
 // Utilize a coleção movies.
 // Sua query deve retornar 41 documentos.
-
 db.movies.aggregate(
   {
     $match: {
