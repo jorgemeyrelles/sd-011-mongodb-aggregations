@@ -3,6 +3,9 @@ db.movies.aggregate([
     $match: { awards: { $regex: /Won/i } },
   },
   {
+    $match: { awards: { $regex: /oscars/i } },
+  },
+  {
     $group: {
       _id: null,
       maior_rating: { $max: "$imdb.rating" },
