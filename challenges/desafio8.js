@@ -1,4 +1,4 @@
-db.air_alliance.aggregate([
+db.air_alliances.aggregate([
   {
     $lookup: {
       from: "air_routes",
@@ -7,4 +7,9 @@ db.air_alliance.aggregate([
       as: "routes",
     },
   },
+  { $unwind: "$routes" },
+  { $match: { "routes.airplane": { $in: ["747", "380"] } } },
+  { $group: { _id: "$name", totalRotas: { $sum: 1 } } },
+  { $sort: { totalRotas: -1 } },
+  { $limit: 1 },
 ]);
