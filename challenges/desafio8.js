@@ -1,4 +1,3 @@
-use("aggregations");
 db.air_routes.aggregate([
   {
     $match: {
