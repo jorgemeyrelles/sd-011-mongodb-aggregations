@@ -1,33 +1,23 @@
 use ('aggregations');
-db.air_alliances.find();
-
-use ('aggregations');
-db.air_routes.find();
-
-use ('aggregations');
 db.trips.find();
 
 use("aggregations");
 db.trips.aggregate([
   {
-    $group: {
-      _id: {
-        dia_semana: {$dayOfWeek: "$startTime"},
-        ponto: "$startStationName"
-        },
-      count: { $sum: 1 }
+    $match: {
+      startTime: { $gte: new Date('2016-03-10'), $lt: new Date('2016-03-11')}
     }
   },
   {
-    $sort: {
-      count: -1
+    $group: {
+      _id: null,
+      duracaoMediaEmMinutos: { $avg: { $subtract: ['$stopTime','$startTime'] } },
     }
   },
   {
     $project: {
       _id: 0,
-      nomeEstacao: "$_id.ponto",
-      total: "$count"
+      duracaoMediaEmMinutos: {$round: {$divide: [{$divide: ["$duracaoMediaEmMinutos", 1000]}, 60]}},
     }
   },
   {
