@@ -1,10 +1,9 @@
 db.movies.aggregate([
   {
-    $project: {
+    $addFields: {
       title_split: {
         $split: ["$title", " "],
       },
-      _id: 0,
     },
   },
   {
@@ -14,10 +13,13 @@ db.movies.aggregate([
       },
     },
   },
-  // {
-  //   $group: {
-  //     _id: null,
-  //     count: { $sum: 1 },
-  //   },
-  // },
+  {
+    $sort: { title_split: 1 },
+  },
+  {
+    $project: {
+      title_split: 1,
+      _id: 0,
+    },
+  },
 ]);
