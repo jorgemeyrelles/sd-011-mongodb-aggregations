@@ -7,28 +7,19 @@ db.air_routes.find();
 use ('aggregations');
 db.trips.find();
 
-use ('aggregations');
+use("aggregations");
 db.trips.aggregate([
   {
-    $match: {
-      $and: [
-        {birthYear: {$exists: true} },
-        {birthYear: {$not: { $eq: "" }}}
-      ]
-    }
-  },
-  {
     $group: {
-      _id: null,
-      maior: {  $max: { $toInt:"$birthYear" } },
-      menor: { $min: { $toInt:"$birthYear" } }
-      }
+      _id: "$usertype",
+      duracao: { $avg: { $subtract: ["$stopTime", "$startTime"] } },
+    },
   },
-  {
-    $project: {
-      _id: 0,
-      maiorAnoNascimento: "$maior",
-      menorAnoNascimento: "$menor"
-    }
-  }
+    {
+      $project: {
+        _id: 0,
+        tipo: "$_id",
+        duracaoMedia: {$round:[{$divide: [{$divide: ["$duracao", 1000]}, 3600]},2]}
+      },
+    },
 ]);
