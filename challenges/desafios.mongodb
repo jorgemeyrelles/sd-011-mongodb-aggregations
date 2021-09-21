@@ -137,6 +137,7 @@ use ('aggregations');
 //   { $project: { title: 1, _id: 0 } }
 // ]);
 
+// Desafio 6
 // db.movies.aggregate([
 //   {
 //     $match: {
@@ -165,6 +166,7 @@ use ('aggregations');
 //   },
 // ]);
 
+// Desafio 7
 // db.movies.aggregate([
 //   {
 //     $match: {
@@ -195,6 +197,8 @@ use ('aggregations');
 //   }
 // ]);
 
+
+// Desafio 8
 // db.air_alliances.aggregate([
 //   {
 //     $unwind: "$airlines"
@@ -231,29 +235,57 @@ use ('aggregations');
 // });
 
 
+// Desafio 9
 // db.trips.find();
+// db.trips.aggregate([
+//   {
+//     $match: {
+//       birthYear: { $exists: true },
+//       birthYear: { $not: { $eq: "" } },
+//     },
+//   },
+//   {
+//     $addFields: {
+//       birthYearInt: { $toInt: "$birthYear" },
+//     },
+//   },
+//   {
+//     $group: {
+//       _id: null,
+//       maiorAnoNascimento: { $max: "$birthYearInt" },
+//       menorAnoNascimento: { $min: "$birthYearInt" },
+//     },
+//   },
+//   {
+//     $project: {
+//       _id: 0
+//     }
+//   }
+// ]);
+
+
+// Desafio 10
 db.trips.aggregate([
   {
-    $match: {
-      birthYear: { $exists: true },
-      birthYear: { $not: { $eq: "" } },
-    },
-  },
-  {
-    $addFields: {
-      birthYearInt: { $toInt: "$birthYear" },
-    },
-  },
-  {
     $group: {
-      _id: null,
-      maiorAnoNascimento: { $max: "$birthYearInt" },
-      menorAnoNascimento: { $min: "$birthYearInt" },
-    },
+      _id: "$usertype",
+      duracaoMedia: {
+        $avg: {
+          $subtract: ["$stopTime", "$startTime"]
+        }
+      }
+    }
   },
   {
     $project: {
-      _id: 0
+      _id: 0,
+      tipo: "$_id",
+      duracaoMedia: {
+        $round: [
+          { $divide: ["$duracaoMedia", 3.6e+6] },
+          2
+        ]
+      },
     }
   }
 ]);
