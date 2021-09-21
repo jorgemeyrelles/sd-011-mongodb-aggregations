@@ -1,4 +1,3 @@
-use("aggregations");
 db.movies.aggregate([
   {
     $match: {
@@ -11,10 +10,11 @@ db.movies.aggregate([
   {
     $project: {
       _id: 0,
-      titulo: $title,
-      avaliado: $imdb.rating,
-      notaIMDB: $imdb.votes,
-      ano: $year,
+      titulo: "$title",
+      avaliado: "$rated",
+      notaIMDB: "$imdb.rating",
+      votosIMDB: "$imdb.votes",
+      ano: "$year",
     },
   },
 ]);
