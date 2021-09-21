@@ -22,3 +22,21 @@ Por exemplo, "Cinderela" e "3-25" devem entrar nessa contagem, mas "Cast Away" n
 Dica: utilize os operadores $split, $size e $sort para te auxiliar. Documentação do $split
 
 Sua query deve retornar 8068 documentos. */
+
+// use("aggregations");
+db.movies.aggregate([
+  {
+    $project: {
+      _id: 0,
+      title_split: { $split: ["$title", " "] },
+    },
+  },
+  {
+    $match: {
+      title_split: { $size: 1 },
+    },
+  },
+  {
+    $sort: { title_split: 1 },
+  },
+]);
