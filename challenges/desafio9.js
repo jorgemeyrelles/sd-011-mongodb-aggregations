@@ -1,5 +1,3 @@
-// use("aggregations");
-
 db.trips.aggregate(
   { $match: { birthYear: { $exists: true, $ne: "" } } },
   { $addFields: { birthYear: { $toInt: "$birthYear" } } },
