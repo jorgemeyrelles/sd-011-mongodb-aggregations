@@ -24,7 +24,7 @@ db.movies.aggregate([
     $project: {
       _id: 1,
       numeroFilmes: 1,
-      mediaImdb: { $round: ["$mediaImdb", 1] },
+      mediaIMDB: { $round: ["$mediaImdb", 1] },
     },
   },
 ]);
