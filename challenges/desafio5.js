@@ -12,17 +12,17 @@ db.movies.aggregate([
       tomatoes_viewer_rating: "$tomatoes.viewer.rating",
       title: 1,
       num_favs: { $size: {
-          $setIntersection: [
-            [
-              "Sandra Bullock",
-              "Tom Hanks",
-              "Julia Roberts",
-              "Kevin Spacey",
-              "George Clooney",
-            ],
-            "$cast"
+        $setIntersection: [
+          [
+            "Sandra Bullock",
+            "Tom Hanks",
+            "Julia Roberts",
+            "Kevin Spacey",
+            "George Clooney",
           ],
-        },
+          "$cast",
+        ],
+      },
       },
       cast: 1,
     },

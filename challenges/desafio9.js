@@ -9,8 +9,8 @@ db.trips.aggregate([
   },
   {
     $project: {
-      birthYear: { $toInt: "$birthYear" }
-    }
+      birthYear: { $toInt: "$birthYear" },
+    },
   },
   {
     $group: {

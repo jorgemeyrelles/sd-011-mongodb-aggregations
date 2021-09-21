@@ -6,10 +6,10 @@ db.air_alliances.aggregate([
       let: { alliance_airlines: "$airlines" },
       pipeline: [
         { $match: {
-            $expr: { $and: [
-              { $in: ["$airplane", ["747", "380"]] },
-              { $in: ["$airline.name", "$$alliance_airlines"] },
-            ] },
+          $expr: { $and: [
+            { $in: ["$airplane", ["747", "380"]] },
+            { $in: ["$airline.name", "$$alliance_airlines"] },
+          ] },
         } },
       ],
     },

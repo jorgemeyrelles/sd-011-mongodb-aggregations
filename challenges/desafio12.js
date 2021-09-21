@@ -30,16 +30,16 @@ db.trips.aggregate([
       as: "stations",
       let: { targetDay: "$diaDaSemana" },
       pipeline: [
-        { 
+        {
           $match: {
             $expr: { $eq: [{ $dayOfWeek: "$startTime" }, "$$targetDay"] },
-          }
+          },
         },
         {
           $group: {
             _id: "$startStationName",
             count: { $sum: 1 },
-          }
+          },
         },
       ],
     },
