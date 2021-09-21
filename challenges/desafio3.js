@@ -6,7 +6,7 @@ db.movies.aggregate([
         $in: ["Crime", "Horror"],
       } },
       rated: { $in: ["PG", "G"] },
-      languages: ["English", "Spanish"],
+      languages: { $all: ["English", "Spanish"] },
     },
   },
   {
