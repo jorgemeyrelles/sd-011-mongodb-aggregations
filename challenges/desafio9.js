@@ -2,23 +2,23 @@ db.trips.aggregate([
   {
     $match: {
       birthYear: { $exists: true, $ne: "" },
-    }
+    },
   },
-  { 
-    $addFields: { birthYear: { $toInt:  "$birthYear" } } 
+  {
+    $addFields: { birthYear: { $toInt: "$birthYear" } },
   },
   {
     $group: {
       _id: null,
       maiorAnoNascimento: { $max: "$birthYear" },
       menorAnoNascimento: { $min: "$birthYear" },
-    }
+    },
   },
   {
     $project: {
       _id: 0,
       maiorAnoNascimento: "$maiorAnoNascimento",
       menorAnoNascimento: "$menorAnoNascimento",
-    }
-  }
+    },
+  },
 ]);
