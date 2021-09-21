@@ -11,7 +11,10 @@ use("aggregations");
 db.trips.aggregate([
   {
     $group: {
-      _id: {$dayOfWeek: "$startTime"},
+      _id: {
+        dia_semana: {$dayOfWeek: "$startTime"},
+        ponto: "$startStationName"
+        },
       count: { $sum: 1 }
     }
   },
@@ -23,7 +26,7 @@ db.trips.aggregate([
   {
     $project: {
       _id: 0,
-      diaDaSemana: "$_id",
+      nomeEstacao: "$_id.ponto",
       total: "$count"
     }
   },
