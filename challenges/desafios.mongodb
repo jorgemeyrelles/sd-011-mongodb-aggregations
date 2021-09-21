@@ -91,48 +91,76 @@ use ('aggregations');
 // ]);
 
 // Desafio 5
+// db.movies.aggregate([
+//   {
+//     $match: {
+//       countries: { $all: ["USA"] },
+//       "tomatoes.viewer.rating": { $gte: 3 },
+//       cast: { 
+//         $in: [
+//           "Sandra Bullock",
+//           "Tom Hanks",
+//           "Julia Roberts",
+//           "Kevin Spacey",
+//           "George Clooney",
+//         ] 
+//       }
+//     }
+//   },
+//   {
+//     $addFields: {
+//       num_favs: {
+//         $size: {
+//           $setIntersection: [
+//             "$cast",
+//             [
+//               "Sandra Bullock",
+//               "Tom Hanks",
+//               "Julia Roberts",
+//               "Kevin Spacey",
+//               "George Clooney"
+//             ]
+//           ]
+//         }
+//       }
+//     }
+//   },
+//   {
+//     $sort: {
+//       num_favs: -1,
+//       "tomatoes.viewer.rating": -1,
+//       title: -1
+//     }
+//   },
+//   { $skip: 24 },
+//   { $limit: 1 },
+//   { $project: { title: 1, _id: 0 } }
+// ]);
+
 db.movies.aggregate([
   {
     $match: {
-      countries: { $all: ["USA"] },
-      "tomatoes.viewer.rating": { $gte: 3 },
-      cast: { 
-        $in: [
-          "Sandra Bullock",
-          "Tom Hanks",
-          "Julia Roberts",
-          "Kevin Spacey",
-          "George Clooney",
-        ] 
-      }
-    }
+      awards: {
+        $regex: /(w[io]n)(.*)(oscar[s]?)/gi,
+      },
+    },
   },
   {
-    $addFields: {
-      num_favs: {
-        $size: {
-          $setIntersection: [
-            "$cast",
-            [
-              "Sandra Bullock",
-              "Tom Hanks",
-              "Julia Roberts",
-              "Kevin Spacey",
-              "George Clooney"
-            ]
-          ]
-        }
-      }
-    }
+    $group: {
+      _id: null,
+      "maior_rating" : { $max: "$imdb.rating"},
+      "menor_rating" : { $min: "$imdb.rating"},
+      "media_rating" : { $avg: "$imdb.rating" },
+      "desvio_padrao" : { $stdDevSamp: "$imdb.rating"},
+    },
   },
   {
-    $sort: {
-      num_favs: -1,
-      "tomatoes.viewer.rating": -1,
-      title: -1
-    }
+    $project: {
+      _id: 0,
+      maior_rating: 1,
+      menor_rating: 1,
+      media_rating: { $round: ["$media_rating", 1] },
+      desvio_padrao: { $round: ["$desvio_padrao", 1] },
+    },
   },
-  { $skip: 24 },
-  { $limit: 1 },
-  { $project: { title: 1, _id: 0 } }
 ]);
