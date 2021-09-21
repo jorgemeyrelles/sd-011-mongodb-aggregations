@@ -5,29 +5,29 @@ use ('aggregations');
 db.movies.aggregate([
   {
     $match: {
-      awards: {
-        // Com ajuda de Guilheme Nunes, pude melhorar um regex pattern
-        // https://github.com/guiicnunes
-        $regex: /(win|won)\s(.*)\s(oscar[s]?)/gi
-      }
+      languages: { $in: ["English"] }
     }
   },
   {
+    $unwind: "$cast"
+  },
+  {
     $group: {
-      _id: null,
-      "maior_rating": {  $max: "$imdb.rating"  },
-      "menor_rating": { $min: "$imdb.rating"  },
-      "media_rating": { $avg: "$imdb.rating"  },
-      "desvio_padrao": { $stdDevSamp: "$imdb.rating" },
+      _id: "$cast",
+      numeroFilmes: {
+        $sum: 1,
+      },
+      mediaIMDB:{$avg: { $sum: "$imdb.rating" } }
     }
   },
   {
     $project: {
-      _id: 0,
-      maior_rating: { $round: ["$maior_rating", 1] },
-      menor_rating: { $round: ["$menor_rating", 1] },
-      media_rating: { $round: ["$media_rating", 1] },
-      desvio_padrao: { $round: ["$desvio_padrao", 1] }
+      _id: 1,
+      numeroFilmes: 1,
+      mediaIMDB: {$round: ["$mediaIMDB", 1]}
     }
+  },
+  {
+    $sort: {numeroFilmes: -1, _id: -1}
   }
 ]);
