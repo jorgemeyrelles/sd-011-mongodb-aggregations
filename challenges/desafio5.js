@@ -7,12 +7,11 @@ const favorites = [
 ];
 
 db.movies.aggregate([
-  { $match: { countries: { $gt: "USA" } } },
+  { $match: { countries: { $eq: "USA" } } },
   { $match: { "tomatoes.viewer.rating": { $gte: 3 } } },
-  { $match: { title: { $skip: 24 } } },
-  { $match: { title: { $limit: 1 } } },
-  { $addFields: { num_favs: { $size: { $setIntersection: [favorites, "$cast"] } } },
-  },
+  { $addFields: { num_favs: { $size: { $setIntersection: [favorites, "$cast"] } } } },
+  { $sort: { num_favs: -1, "tomatoes.viewer.rating": -1, title: -1 } },
   { $project: { _id: 0, title: 1 } },
-  { $sort: { num_fav: -1, "tomatoes.viewer.rating": -1, title: -1, _id: 0 } },
+  { $skip: 24 },
+  { $limit: 1 },
 ]);
