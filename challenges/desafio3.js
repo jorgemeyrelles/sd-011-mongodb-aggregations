@@ -9,19 +9,18 @@ db.movies.aggregate(
   },
   {
     $project: {
-      title: 1,
-      rated: 1,
-      "imdb.rating": 1,
-      "imdb.votes": 1,
-      year: 1,
       _id: 0,
+      titulo: "$title",
+      avaliado: "$rated",
+      notaIMDB: "$imdb.rating",
+      votosIMDB: "$imdb.votes",
+      ano: "$year"
     },
   },
   {
     $sort: {
-      year: -1,
-      "imdb.rating": -1,
-      title: 1,
+      ano: -1,
+      notaIMDB: -1,
     },
   },
 );

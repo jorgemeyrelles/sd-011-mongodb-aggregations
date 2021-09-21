@@ -1,20 +1,19 @@
 db.movies.aggregate(
   {
-    $sort: {
-      title: 1,
-    },
-  },
-  {
     $addFields: {
       title_split: {
         $split: ["$title", " "],
       },
-      count: { $size: { $split: ["$title", " "] } },
     },
   },
   {
     $match: {
-      count: { $eq: 1 },
+      title_split: { $size: 1 },
+    },
+  },
+  {
+    $sort: {
+      title: 1,
     },
   },
   {
