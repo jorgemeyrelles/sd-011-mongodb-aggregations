@@ -16,11 +16,10 @@ db.movies.aggregate([
   },
   {
     $addFields: {
-      num_favs: { $size: { $setIntersection: [artists, "$cast"] } },
+      num_favs: {
+        $size: {
+          $setIntersection: [artists, "$cast"] } },
     },
-  },
-  {
-    $size: { num_favs: 1 },
   },
   { $sort: {
     num_favs: -1,
