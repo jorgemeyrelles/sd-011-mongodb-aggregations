@@ -11,4 +11,3 @@ db.trips.aggregate([
   },
   { $project: { _id: 0, maiorAnoNascimento: 1, menorAnoNascimento: 1 } },
 ]);
-// .itcount();
