@@ -8,10 +8,16 @@ db.movies.aggregate([
     },
   },
   {
-    $project: {
+    $match: {
       title_split: {
         $size: 1,
       },
     },
   },
+  // {
+  //   $group: {
+  //     _id: null,
+  //     count: { $sum: 1 },
+  //   },
+  // },
 ]);
