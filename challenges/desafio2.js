@@ -15,6 +15,6 @@ db.movies.aggregate(
       "imdb.votes": 1,
       year: 1,
       _id: 0,
-    }
+    },
   },
 );

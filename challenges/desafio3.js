@@ -15,13 +15,13 @@ db.movies.aggregate(
       "imdb.votes": 1,
       year: 1,
       _id: 0,
-    }
+    },
   },
   {
     $sort: {
       year: -1,
       "imdb.rating": -1,
       title: 1,
-    }
-  }
+    },
+  },
 );

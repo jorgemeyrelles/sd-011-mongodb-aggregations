@@ -8,7 +8,7 @@ db.movies.aggregate(
   },
   {
     $addFields: {
-      num_favs: { 
+      num_favs: {
         $size: {
           $setIntersection: [[
             "Sandra Bullock",
@@ -16,8 +16,8 @@ db.movies.aggregate(
             "Julia Roberts",
             "Kevin Spacey",
             "George Clooney",
-            ],"$cast"
-          ]
+            ], "$cast",
+          ],
         },
       },
     },
@@ -39,6 +39,6 @@ db.movies.aggregate(
     $project: {
       title: 1,
       _id: 0,
-    }
+    },
   },
 );
