@@ -3,7 +3,7 @@ db.trips.aggregate([
     $match: { birthYear: { $exists: true } },
   },
   {
-    $match: { birthYear: { $ne: " " } },
+    $match: { birthYear: { $ne: "" } },
   },
   {
     $group: {
