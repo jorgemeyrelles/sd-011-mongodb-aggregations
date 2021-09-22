@@ -1,19 +1,17 @@
 db.trips.aggregate(
   {
     $addFields: {
-      milisegundos: 60 * 1000,
+      tempoMedio: {$divide: [
+            { $subtract: ["$stopTime", "$startTime"] },
+            60 * 1000,
+          ]},
     },
   },
   {
     $group: {
       _id: "$bikeid",
       duracaoMedia: {
-        $avg: {
-          $divide: [
-            { $subtract: ["$stopTime", "$startTime"] },
-            "$milisegundos",
-          ],
-        },
+        $avg: "$tempoMedio",
       },
     },
   },
