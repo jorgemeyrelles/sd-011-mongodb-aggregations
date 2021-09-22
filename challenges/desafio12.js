@@ -11,3 +11,32 @@ O resultado da sua query deve ter exatamente o seguinte formato (incluindo a ord
 
 { "nomeEstacao" : <nome_da_estacao>, "total" : <total_de_viagens> }
 */
+
+// use('aggregations');
+db.trips.aggregate([
+  {
+    $addFields: {
+      diaDaSemana: { $dayOfWeek: "$startTime" },
+    },
+  },
+  {
+    $match: {
+      diaDaSemana: 5,
+    },
+  },
+  {
+    $group: {
+      _id: "$startStationName",
+      total: { $sum: 1 },
+    },
+  },
+  { $sort: { total: -1 } },
+  {
+    $project: {
+      _id: 0,
+      nomeEstacao: "$_id",
+      total: "$total",
+    },
+  },
+  { $limit: 1 },
+]);
