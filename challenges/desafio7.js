@@ -17,6 +17,11 @@ db.movies.aggregate([
 // busca pelo nome das pessoas atrizes
 db.movies.aggregate([
   {
+    $match: {
+      languages: { $all: ["English"] },
+    },
+  },
+  {
     $unwind: "$cast",
   },
   {
@@ -28,3 +33,27 @@ db.movies.aggregate([
   },
 ]);
 
+// busca pela quantidade de filmes com participação
+db.movies.aggregate([
+  {
+    $match: {
+      languages: { $all: ["English"] },
+    },
+  },
+  {
+    $unwind: "$cast",
+  },
+  {
+    $group:
+    {
+      _id: "$cast",
+      jobs: { $sum: 1 },
+    },
+  },
+  {
+    $project:
+    {
+      jobs: 1,
+    },
+  },
+]);
