@@ -8,7 +8,7 @@ db.air_alliances.aggregate([
         {
           $match: {
             $expr: {
-              $eq: ["$$rotas", "$airline.name"] } } },
+              $eq: ["$$rotas", "$airlines.name"] } } },
       ],
       as: "totalRotas",
     },
@@ -19,7 +19,7 @@ db.air_alliances.aggregate([
   },
   {
     $match: {
-      "$totalRotas.airplane": { $in: ["747", "380"] },
+      "totalRotas.airplane": { $in: ["747", "380"] },
     },
   },
   {
