@@ -12,7 +12,6 @@ db.movies.aggregate([
     $project: {
       _id: 0,
       title: 1,
-      cast: 1,
       "tomatoes.viewer.rating": 1,
       num_favs: { $size: { $setIntersection: [[
         "Sandra Bullock",
