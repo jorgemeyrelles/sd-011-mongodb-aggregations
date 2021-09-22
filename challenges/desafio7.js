@@ -28,22 +28,3 @@ db.movies.aggregate([
     },
   },
 ]);
-db.trips.aggregate([
-  {
-    $group: {
-      _id: "$usertype",
-      duracaoMedia: {
-        $avg: {
-          $round: [{ $hour: "$startTime" }, 2],
-        },
-      },
-    },
-  },
-  {
-    $project: {
-      _id: 0,
-      duracaoMedia: 1,
-      tipo: "$_id",
-    },
-  },
-]);
