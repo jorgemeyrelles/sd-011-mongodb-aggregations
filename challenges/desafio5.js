@@ -7,13 +7,7 @@ const atores = [
 ];
 
 db.movies.aggregate([
-  {
-    $match: {
-      countries: { $all: ["USA"] },
-      "tomatoes.viewer.rating": { $gte: 3 },
-      cast: { $exists: 1 },
-    },
-  },
+
   {
     $addFields: {
       num_favs: {
@@ -24,6 +18,13 @@ db.movies.aggregate([
     },
   },
   {
+    $match: {
+      countries: { $in: ["USA"] },
+      "tomatoes.viewer.rating": { $gte: 3 },
+      cast: { $in: atores },
+    },
+  },
+  {
     $sort: {
       num_favs: 1,
       "tomatoes.viewer.rating": -1,
@@ -31,15 +32,15 @@ db.movies.aggregate([
     },
   },
   {
-    $skip: 24,
-  },
-  {
-    $limit: 1,
-  },
-  {
     $project: {
       _id: 0,
       title: 1,
     },
+  },
+  {
+    $skip: 24,
+  },
+  {
+    $limit: 1,
   },
 ]);
