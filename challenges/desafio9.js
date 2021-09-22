@@ -12,15 +12,13 @@ db.trips.aggregate([
   {
     $group: {
       _id: null,
-      maiorAnoNascimento: { $max: "$birthYear" },
-      menorAnoNascimento: { $min: "$birthYear" },
+      maiorAnoNascimento: { $max: { $toInt: "$birthYear" } },
+      menorAnoNascimento: { $min: { $toInt: "$birthYear" } },
     },
   },
   {
     $project: {
       _id: 0,
-      maiorAnoNascimento: { $toInt: "$maiorAnoNascimento" },
-      menorAnoNascimento: { $toInt: "$menorAnoNascimento" },
     },
   },
 ]);
