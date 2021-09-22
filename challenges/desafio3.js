@@ -1,7 +1,9 @@
 /* Desafio 3
-Agora que você tem os campos essenciais, aplique mais um estágio na pipeline do desafio anterior que atenda a seguinte demanda:
+Agora que você tem os campos essenciais, aplique mais
+um estágio na pipeline do desafio anterior que atenda a seguinte demanda:
 
-Retorne esses filmes ordenados por ano e nota IMDB de forma decrescente e título por ordem alfabética. */
+Retorne esses filmes ordenados por ano e nota IMDB de forma decrescente
+e título por ordem alfabética. */
 db.movies.aggregate([
   {
     $match: {
@@ -21,5 +23,5 @@ db.movies.aggregate([
       ano: "$year",
     },
   },
-  {$sort: {ano: -1, notaIMDB: -1, titulo: 1}}
+  { $sort: { ano: -1, notaIMDB: -1, titulo: 1 } },
 ]); // .itcount();
