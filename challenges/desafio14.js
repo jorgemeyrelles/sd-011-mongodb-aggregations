@@ -1,8 +1,5 @@
 db.trips.aggregate([
-  {
-    $addFields: { date: { $dateToString: { format: "%Y-%m-%d", date: "$startTime" } } },
-  },
-  { $match: { date: { $in: ["2016-03-10"] } } },
+  { $match: {} },
   { $group:
     {
       _id: "$bikeid",
