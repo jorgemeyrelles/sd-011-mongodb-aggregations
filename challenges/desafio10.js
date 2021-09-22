@@ -16,7 +16,7 @@ db.trips.aggregate(
     $project: {
       _id: 0,
       tipo: "$_id",
-      duracaMedia: { $round: [{ $divide: ["$duracaMedia", 60 * 60 * 1000] }, 2] },
+      duracaMedia: { $round: [{ $divide: ["$duracaoMedia", 60 * 60 * 1000] }, 2] },
     },
   },
 );
