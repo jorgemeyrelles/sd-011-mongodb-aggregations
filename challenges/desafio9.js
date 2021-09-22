@@ -1,9 +1,9 @@
-db.trips.aggregate( 
+db.trips.aggregate(
   {
     $match: { birthYear: { $exists: true, $ne: "" } },
   },
   {
-    $addFields: { birthYear: { $toInt:  "$birthYear" } },
+    $addFields: { birthYear: { $toInt: "$birthYear" } },
   },
   {
     $group: {
@@ -13,7 +13,7 @@ db.trips.aggregate(
     },
   },
   {
-    $project: { 
+    $project: {
       maiorAnoNascimento: "$maiorAnoNascimento",
       menorAnoNascimento: "$menorAnoNascimento",
       _id: 0,
