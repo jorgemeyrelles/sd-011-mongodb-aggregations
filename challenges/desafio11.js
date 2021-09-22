@@ -5,7 +5,7 @@ db.trips.aggregate([
     _id: "$diaDaSemana",
     totalPorSemana: { $count: {} },
   } },
-  { $sort: { total: -1 } },
+  { $sort: { totalPorSemana: -1 } },
   { $limit: 1 },
   { $project: {
     _id: 0,
