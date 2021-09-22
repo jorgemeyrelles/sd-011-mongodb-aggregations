@@ -5,15 +5,20 @@ db.trips.aggregate([
     },
   },
   {
+    $match: {
+      dayWeek: 5,
+    },
+  },
+  {
     $group: {
-      _id: "$dayWeek",
+      _id: "$startStationName",
       viagens: { $sum: 1 },
     },
   },
   {
     $project: {
       _id: 0,
-      diaDaSemana: "$_id",
+      nomeEstacao: "$_id",
       total: "$viagens",
     },
   },
