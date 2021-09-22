@@ -9,11 +9,11 @@ db.movies.aggregate([
   } },
   {
     $project: {
-    _id: 0,
-    maior_rating: "$maior_rating",
-    menor_rating: "$menor_rating",
-    media_rating: { $round: ["$media_rating", 1], },
-    desvio_padrao: { $round: ["$desvio_rating", 1], },
+      _id: 0,
+      maior_rating: "$maior_rating",
+      menor_rating: "$menor_rating",
+      media_rating: { $round: ["$media_rating", 1], },
+      desvio_padrao: { $round: ["$desvio_rating", 1], },
     },
   },
-  ]);
+]);
