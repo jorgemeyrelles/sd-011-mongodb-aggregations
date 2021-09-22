@@ -7,6 +7,9 @@ db.trips.aggregate(
   },
   { $addFields: { tempo: 60 * 60 * 1000 } },
   {
+    $sort: { duracaoMedia: 1 },
+  },
+  {
     $project: {
       tipo: "$_id",
       duracaoMedia: {
