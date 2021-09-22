@@ -9,7 +9,7 @@ db.movies.aggregate([
     },
   },
   {
-    $projects:
+    $project:
     {
       _id: 0,
       titulo: "$title",
