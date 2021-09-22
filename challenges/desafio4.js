@@ -18,5 +18,6 @@ Por exemplo, "Cinderela" e "3-25" devem entrar nessa contagem, mas "Cast Away" n
 db.movies.aggregate([
   { $addFields: { title_split: { $split: ["$title", " "] } } },
   { $match: { title_split: { $size: 1 } } },
-  { $project: { _id: 0, title: 1 } },
+  { $project: { _id: 0, title_split: 1 } },
+  { $sort: {title_split: 1}}
 ]);
