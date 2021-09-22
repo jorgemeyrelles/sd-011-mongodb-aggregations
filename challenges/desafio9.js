@@ -12,3 +12,26 @@ O resultado da sua query deve ter exatamente o seguinte formato (incluindo a ord
 
 { "maiorAnoNascimento" : <ano>, "menorAnoNascimento" : <ano> }
 */
+
+// use("aggregations");
+db.trips.aggregate([
+  {
+    $match: {
+      birthYear: { $exists: true, $ne: "" },
+    },
+  },
+  {
+    $group: {
+      _id: null,
+      maiorAnoNascimento: { $max: { $toInt: "$birthYear" } },
+      menorAnoNascimento: { $min: { $toInt: "$birthYear" } },
+    },
+  },
+  {
+    $project: {
+      _id: 0,
+      maiorAnoNascimento: 1,
+      menorAnoNascimento: 1,
+    },
+  },
+]);
