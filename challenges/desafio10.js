@@ -1,4 +1,4 @@
-db.trips.aggregate([
+db.trips.aggregate(
   {
     $group: {
       _id: "$usertype",
@@ -19,6 +19,7 @@ db.trips.aggregate([
       duracaMedia: {
         $round: [{ $divide: ["$duracaMedia", 60 * 60 * 1000] }, 2],
       },
+      _id: 0,
     },
-  },
-]);
+  }
+);
