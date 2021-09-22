@@ -1,0 +1,15 @@
+db.trips.aggregate([
+  { $match: { startTime: {
+    $gte: ISODate("2016-03-10"), $lte: ISODate("2016-03-11"),
+  } } },
+  { $addFields: { time: { $divide: [{ $subtract: ["$stopTime", "$startTime"] },
+    60 * 1000] } } },
+  { $group: {
+    _id: null,
+    duracaoMedia: { $avg: "$time" },
+  } },
+  { $project: {
+    _id: 0,
+    duracaoMediaEmMinutos: { $round: "$duracaoMedia" },
+  } },
+]);
