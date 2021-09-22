@@ -69,17 +69,23 @@ db.movies.aggregate([
     $unwind: "$cast",
   },
   {
+    $addFields: {
+      imdbRating: "$imdb.rating",
+    },
+  },
+  {
     $group:
     {
       _id: "$cast",
       jobs: { $sum: 1 },
-      
+      media_rating: { $avg: "$imdbRating" },
     },
   },
   {
     $project:
     {
       jobs: 1,
+      media_rating: { $round: ["$media_rating", 1] },
     },
   },
 ]);
