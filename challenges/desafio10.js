@@ -1,5 +1,3 @@
-use("aggregations");
-
 db.trips.aggregate([
   { $group: {
     _id: "$usertype",
@@ -10,13 +8,13 @@ db.trips.aggregate([
     },
   } },
   {
+    $sort: { duracaoMedia: 1 },
+  },
+  {
     $project: {
       tipo: "$_id",
       duracaoMedia: { $round: [{ $divide: ["$duracaoMedia", 60 * 60 * 1000] }, 2] },
       _id: 0,
     },
-  },
-  {
-    $sort: { duracaoMedia: 1 },
   },
 ]);
