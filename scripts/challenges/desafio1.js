@@ -9,6 +9,6 @@ db.movies.aggregate([
     },
   },
   // {
-  //   $count: "Total"
-  // }
+  //   $count: "Total",
+  // },
 ]);
