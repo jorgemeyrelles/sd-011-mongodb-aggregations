@@ -18,5 +18,3 @@ db.trips.aggregate([{
     },
   },
 }]);
-
-db.trips.find().pretty();
