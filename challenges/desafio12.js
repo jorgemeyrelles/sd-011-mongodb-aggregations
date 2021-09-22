@@ -1,6 +1,6 @@
 db.trips.aggregate([
   { $match: { $expr: { $eq: [{ $dayOfWeek: "$startTime" }, 5] } } },
-  { $group: { 
+  { $group: {
     _id: "$startStationName",
     totalDiaEstacao: { $count: {} },
   } },
