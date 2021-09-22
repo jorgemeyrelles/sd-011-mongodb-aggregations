@@ -6,7 +6,7 @@ db.air_alliances.aggregate([
       foreignField: "airline.name",
       as: "airplaneMatch",
     },
-  }, 
+  },
   {
     $unwind: "$airplaneMatch",
   },
