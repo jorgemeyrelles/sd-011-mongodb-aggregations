@@ -5,7 +5,8 @@ db.movies.aggregate([
     languages: { $all: ["English", "Spanish"] },
   },
   },
-  { $project: { _id: false,
+  { $project: {
+    _id: false,
     titulo: "$title",
     avaliado: "$rated",
     notaIMDB: "$imdb.rating",
