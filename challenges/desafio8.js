@@ -1,6 +1,6 @@
-db.air_routes.aggregate([
+db.air_alliances.aggregate([
   {
-    $match: { airplane: { $regex: { $in: ["747", "380"] } } },
+    $unwind: "$airlines",
   },
   {
     $project: { _id: "$airplane" },
