@@ -1,30 +1,47 @@
-use ("aggregations");
+use ("aggregations")
 
-db.movies.aggregate([
+db.air_alliances.aggregate([
+  {
+    $unwind: "$airlines",
+  },
+  {
+    $lookup:
+      {
+        from: "air_routes",
+        localField: "airlines",
+        foreignField: "airline.name",
+        as: "air_routes",
+      },
+  },
+    {
+    $unwind: "$air_routes",
+  },
   {
     $match:
     {
-      cast: { $exists: true },
-      languages: { $in: ["English"] }
+      "air_routes.airplane": { $in: ["747", "380"] },
     },
   },
   {
-    $unwind:
-    "$cast"
+    $group: {
+      _id: "$name",
+      totalRotas: { $sum: 1 },
+    },
   },
   {
-    $group: {
-      _id: "$cast",
-      numeroFilmes: { $sum: 1 },
-      mediaIMDB: { $avg: "$imdb.rating"}
-    }
-  },
- {
-   $project:
+    $project:
    {
-    _id: 1,
-    numeroFilmes: 1,
-    mediaIMDB: { $round: ["$mediaIMDB", 1] },
-   }
- }
+     _id: 1,
+     totalRotas: 1,
+   },
+  },
+  {
+    $sort: {
+      totalRotas: -1,
+    },
+  },
+  {
+    $limit: 1,
+  },
 ]);
+
