@@ -1,7 +1,7 @@
 db.trips.aggregate([
   {
     $group: {
-      _id: { $dayOfWeek: "$startTime"},
+      _id: { $dayOfWeek: "$startTime" },
       total: { $sum: 1 },
     },
   },

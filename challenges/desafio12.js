@@ -3,7 +3,7 @@ db.trips.aggregate([
     $group: {
       _id: {
         nomeEstacao: "$startStationName",
-        diaDaSemana: { $dayOfWeek: "$startTime"},
+        diaDaSemana: { $dayOfWeek: "$startTime" },
       },
       total: { $sum: 1 },
     },
