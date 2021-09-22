@@ -3,7 +3,7 @@ db.trips.aggregate([
     $match: {
       birthYear: {
         $exists: true, // filtra os que tem birthYear, e retira os campos vazios.
-        $ne: " ",
+        $ne: "",
       },
     },
   },
