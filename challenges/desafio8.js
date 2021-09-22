@@ -12,12 +12,12 @@ db.air_alliances.aggregate([
   },
   {
     $match: {
-      airplane: { $in: ["747", "380"] }, // primeiro filtro.
+      "$parcerias.airplane": { $in: ["747", "380"] }, // primeiro filtro.
     },
   },
   {
     $group: {
-      _id: "$parcerias.name",
+      _id: "$name",
       totalRotas: { $sum: 1 },
     },
   },
