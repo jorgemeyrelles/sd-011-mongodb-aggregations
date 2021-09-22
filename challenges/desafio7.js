@@ -57,3 +57,29 @@ db.movies.aggregate([
     },
   },
 ]);
+
+// busca pela média do imdb desses filmes arredondada para uma casa decimal
+db.movies.aggregate([
+  {
+    $match: {
+      languages: { $all: ["English"] },
+    },
+  },
+  {
+    $unwind: "$cast",
+  },
+  {
+    $group:
+    {
+      _id: "$cast",
+      jobs: { $sum: 1 },
+      
+    },
+  },
+  {
+    $project:
+    {
+      jobs: 1,
+    },
+  },
+]);
