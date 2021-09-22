@@ -7,15 +7,17 @@ db.trips.aggregate(
       },
     },
   },
-  { $group: {
+  {
+    $group: {
       _id: "Vida Loga e prospera",
       duracaoMediaEmMinutos: {
         $avg: {
           $divide: [{ $subtract: ["$stopTime", "$startTime"] }, 60000],
         },
       },
-   }},
-   {
+    },
+  },
+  {
     $project: {
       duracaoMediaEmMinutos: {
         $ceil: "$duracaoMediaEmMinutos",
