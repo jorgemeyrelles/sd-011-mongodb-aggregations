@@ -3,24 +3,11 @@ use ("aggregations")
 
 db.trips.aggregate([
   {
-    $match: {
-      birthYear: {
-        $exists: true,
-        $ne: ""
-      }
-    }
-  },
-  {
     $group: {
-      _id: null,
-      maiorAnoNascimento: {
-        $max: {
-          $toInt: "$birthYear"
-        }
-      },
-      menorAnoNascimento: {
-        $min: {
-          $toInt: "$birthYear"
+      _id: "$usertype",
+      duracaoMedia: {
+        $avg: {
+          $subtract: ["$stopTime", "$startTime"]
         }
       }
     }
@@ -28,8 +15,17 @@ db.trips.aggregate([
   {
     $project:{
       _id: 0,
-      maiorAnoNascimento: 1,
-      menorAnoNascimento: 1
+      tipo: "$_id",
+      duracaoMedia: {
+        $round: [
+          { $divide: [
+            "$duracaoMedia",
+            3600000
+            ]
+          },
+          2
+        ]  
+      },
     }
   }
 ]);
