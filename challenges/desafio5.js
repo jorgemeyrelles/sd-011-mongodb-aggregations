@@ -1,38 +1,38 @@
 db.movies.aggregate([
   {
     $match: {
-      "countries": "USA",
+      countries: "USA",
       "tomatoes.viewer.rating": { $gte: 3 },
-      "cast": {
+      cast: {
         $in: [
           "Sandra Bullock",
           "Tom Hanks",
           "Julia Roberts",
           "Kevin Spacey",
-          "George Clooney"
-        ]
-      }
-    }
+          "George Clooney",
+        ],
+      },
+    },
   },
   {
     $addFields: {
-      num_favs: { 
+      num_favs: {
         $size: {
           $setIntersection: [[
             "Sandra Bullock",
             "Tom Hanks", "Julia Roberts",
             "Kevin Spacey",
-            "George Clooney"
-          ], "$cast"]
-        }
-      }
-    }
+            "George Clooney",
+          ], "$cast"],
+        },
+      },
+    },
   },
   {
     $sort: {
       num_favs: -1,
       "tomatoes.viewer.rating": -1,
-      title: -1
+      title: -1,
     },
   },
   {
@@ -44,7 +44,7 @@ db.movies.aggregate([
   {
     $project: {
       _id: 0,
-      title: 1
-    }
+      title: 1,
+    },
   },
 ]);

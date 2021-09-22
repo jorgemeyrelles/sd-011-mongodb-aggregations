@@ -8,21 +8,21 @@ db.trips.aggregate([
             {
               $subtract: ["$stopTime", "$startTime"],
             },
-            3600000
-          ]
-        }
-      }
-    }
+            3600000,
+          ],
+        },
+      },
+    },
   },
   {
     $project: {
       _id: 0,
       tipo: "$_id",
       duracaoMedia: {
-        $round: ["$duracaoMedia", 2]
+        $round: ["$duracaoMedia", 2],
       },
-    }
-  }
+    },
+  },
 ]);
 
 // db.trips.aggregate([
