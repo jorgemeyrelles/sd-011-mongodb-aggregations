@@ -1,5 +1,3 @@
-use("aggregations");
-
 db.trips.aggregate([
   { $group: { _id: { diaDaSemana: { $dayOfWeek: "$startTime" }, nomeEstacao: "$startStationName" }, total: { $sum: 1 } } },
   { $sort: { total: -1 } },
