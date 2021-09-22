@@ -22,7 +22,7 @@ db.trips.aggregate([
       total: "$total",
     },
   },
-  // {
-  //   $limit: 1,
-  // },
+  {
+    $limit: 1,
+  },
 ]);
