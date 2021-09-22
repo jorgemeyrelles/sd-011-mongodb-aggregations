@@ -14,3 +14,17 @@ db.movies.aggregate([
   },
 ]);
 
+// busca pelo nome das pessoas atrizes
+db.movies.aggregate([
+  {
+    $unwind: "$cast",
+  },
+  {
+    $project:
+    {
+      _id: 0,
+      cast: 1,
+    },
+  },
+]);
+
