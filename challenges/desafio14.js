@@ -1,10 +1,10 @@
 db.trips.aggregate(
   {
     $addFields: {
-      tempoMedio: {$divide: [
-            { $subtract: ["$stopTime", "$startTime"] },
-            60 * 1000,
-          ]},
+      tempoMedio: { $divide: [
+        { $subtract: ["$stopTime", "$startTime"] },
+        60 * 1000,
+      ] },
     },
   },
   {
