@@ -1,13 +1,14 @@
+use("aggregations");
 db.movies.aggregate(
+  {
+    $match: { awards: { $regex: /oscar/i } },
+  },
   {
     $match: { awards: { $regex: /won/i } },
   },
   {
-    $match: { awards: { $regex: /oscars/i } },
-  },
-  {
     $group: {
-      _id: "Vida longa e prospera",
+      _id: null,
       maior_rating: { $max: "$imdb.rating" },
       menor_rating: { $min: "$imdb.rating" },
       media_rating: { $avg: "$imdb.rating" },
