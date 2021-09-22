@@ -1,18 +1,18 @@
 db.air_alliances.aggregate([
   {
-    $lookup: { // união das duas coleções.
+    $lookup: {
       from: "air_routes",
       localField: "airlines",
       foreignField: "airline.name",
-      as: "parcerias",
+      as: "routes",
     },
   },
   {
-    $unwind: "$parcerias", // após unir as duas coleções se divide cada um dos itens.
+    $unwind: "$routes",
   },
   {
     $match: {
-      "$parcerias.airplane": { $in: ["747", "380"] }, // primeiro filtro.
+      "routes.airplane": { $in: ["747", "380"] },
     },
   },
   {
@@ -22,7 +22,9 @@ db.air_alliances.aggregate([
     },
   },
   {
-    $sort: { totalRotas: -1 },
+    $sort: {
+      totalRotas: -1,
+    },
   },
   {
     $limit: 1,
