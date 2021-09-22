@@ -1,4 +1,3 @@
-use('aggregations');
 db.movies.aggregate([
     {
         $match:
@@ -28,5 +27,3 @@ db.movies.aggregate([
         }
     }
 ]);
-
-
