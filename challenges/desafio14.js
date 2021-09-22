@@ -9,9 +9,9 @@ db.trips.aggregate([
   {
     $project:
     {
-      _id: 0, bikeId: "$_id", duracaoMediaEmMinutos: { $ceil: "$duration" },
+      _id: 0, bikeId: "$_id", duracaoMedia: { $ceil: "$duration" },
     },
   },
-  { $sort: { duracaoMediaEmMinutos: -1 } },
+  { $sort: { duracaoMedia: -1 } },
   { $limit: 5 },
 ]);
