@@ -1,4 +1,4 @@
-db.trips.aggregate(
+db.trips.aggregate([
   {
     $match: {
       startTime: {
@@ -24,5 +24,5 @@ db.trips.aggregate(
         $ceil: "$duracaoMediaEmMinutos",
       },
     },
-  }
-);
+  },
+]);
