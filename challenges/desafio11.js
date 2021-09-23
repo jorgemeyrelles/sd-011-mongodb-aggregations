@@ -1,3 +1,4 @@
+// source: https://docs.mongodb.com/manual/reference/operator/aggregation/dayOfWeek/
 db.trips.aggregate([
   {
     $group:
