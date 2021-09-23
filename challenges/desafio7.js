@@ -5,9 +5,8 @@ db.movies.aggregate([
     _id: "$cast",
     numeroFilmes: { $sum: 1 },
     mediaIMDB: { $avg: "$imdb.rating" },
-
   } },
-  { $sort: { numeroFilmes: 1, _id: 1 } },
+  { $sort: { numeroFilmes: -1, _id: -1 } },
   { $project: {
     _id: "$_id",
     numeroFilmes: "$numeroFilmes",
