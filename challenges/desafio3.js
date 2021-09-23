@@ -35,5 +35,5 @@ db.movies.aggregate(
         ano: -1, notaIMDB: -1, título: 1,
       },
     },
-  ]
+  ],
 );

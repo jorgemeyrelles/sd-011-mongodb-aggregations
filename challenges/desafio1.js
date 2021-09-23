@@ -12,5 +12,5 @@ db.movies.aggregate(
             ],
        },
     },
-  ]
+  ],
 );

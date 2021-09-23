@@ -30,5 +30,5 @@ db.movies.aggregate(
         ano: 1,
       },
     },
-  ]
+  ],
 );
