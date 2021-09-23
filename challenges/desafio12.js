@@ -15,7 +15,7 @@ db.trips.aggregate([
   },
   {
     $project: {
-      nomeEstacao: "$_id.nomeDaEstacao",
+      nomeEstacao: "$_id.nomeEstacao",
       total: "$total",
       _id: 0,
     },
